@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include <string>
 #include <iomanip>
 using namespace std;
@@ -94,6 +95,7 @@ bool Inp(LIST& l, string filename, int i)
 	Init(l);
 	for (int i = 1; i <= n; i++)
 	{
+		fi >> x;
 		NODE* p = GetNode(x);
 		if (p != NULL)
 			AddTail(l, p);
@@ -102,10 +104,18 @@ bool Inp(LIST& l, string filename, int i)
 }
 void BubbleSort(LIST& l)
 {
-	for (NODE* p = l.pHead; p->pNext != NULL; p = p->pNext)
-		for (NODE* q = p->pNext; q != NULL; q = q->pNext)
+	for (int i = NodeCount(l) - 1; i >= 1; i--)
+	{
+		NODE* p = l.pHead;
+		NODE* q = p->pNext;
+		for (int j = 0; j <= i - 1; j++)
+		{
 			if (p->info > q->info)
 				swap(p->info, q->info);
+			p = q;
+			q = q->pNext;
+		}
+	}
 }
 int NodeCount(LIST l)
 {
